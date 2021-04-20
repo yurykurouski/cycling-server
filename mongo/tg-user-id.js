@@ -5,6 +5,10 @@ const userIdsSchema = mongoose.Schema({
   userId: {
     type: Number,
     required: true
+  },
+  subscribed: {
+    type: Boolean,
+    default: false
   }
 
 });

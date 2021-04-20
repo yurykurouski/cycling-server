@@ -1,7 +1,6 @@
-const express = require('express');
 const bot = require("./bot/bot");
+const express = require('express');
 const mongo = require('./mongo/mongo');
-const userIdsSchema = require('./mongo/tg-user-id');
 require('./bot/bot');
 
 const app = express();
@@ -9,28 +8,10 @@ const port = 3012;
 
 app.listen(port);
 
-bot.on('message', (msg) => {
-  const msgNormalized = msg.text.toString().toLowerCase();
-
-  switch (msgNormalized) {
-    case '/start':
-      mongo().then(async () => {
-        try {
-          await new userIdsSchema({
-            _id: msg.chat.id,
-            userId: msg.chat.id
-          }).save()
-        } catch (err) {
-          return console.log('User with provided ID already exists');
-        }
-        console.log('id saved');
-      });
-      
-      break;
-  }
 
 
-})
+
+// bot.sendMessage(312119002, 'hey');
 
 /* mongo().then(async (mongoose) => {
   try {
