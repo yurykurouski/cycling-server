@@ -7,11 +7,6 @@ const token = process.env.TG_TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
-/* const collection = userIdsSchema.find({
-  _id: 312119002
-})
-console.log(collection) */
-
 const addReplyMarkup = (text) => {
   return {
     "reply_markup": {
@@ -35,9 +30,11 @@ bot.on('message', (msg) => {
             userId: usrID
           }).save();
 
-          await bot.sendMessage(usrID, "Welcome, folk", addReplyMarkup('Unsubscribe'));
+          await bot.sendMessage(usrID, 'Welcome, folk.');
+          await bot.sendMessage(usrID, 'You has automatically subscribed for updates. If you want to unsubscribe - just press button bellow', addReplyMarkup('Unsubscribe'));
         } catch (err) {
-          return console.log('User with provided ID already exists');
+          bot.sendMessage(usrID, 'Bot is already activated')
+          return console.error('User with provided ID already exists');
         }
 
         mongoose.connection.close();
@@ -48,22 +45,40 @@ bot.on('message', (msg) => {
     case 'subscribe':
       mongo().then(async (mongoose) => {
         try {
-          await userIdsSchema.findOneAndUpdate
+          await userIdsSchema.findOneAndUpdate({
+            _id: usrID
+          }, {
+            subscribed: true
+          })
+        } catch (err) {
+          return console.error('Error: ', error)
         }
-      })
 
-      bot.sendMessage(usrID, "You have sucessfully subscribe for updates.", addReplyMarkup('Unsubscribe'));
+        mongoose.connection.close();
+        bot.sendMessage(usrID, "You have sucessfully subscribe for updates.", addReplyMarkup('Unsubscribe'));
+      });
       break;
 
     case 'unsubscribe':
-      bot.sendMessage(usrID, "You have sucessfully unsubscribed from updates.", addReplyMarkup('Subscribe'));
+      mongo().then(async (mongoose) => {
+        try {
+          await userIdsSchema.findOneAndUpdate({
+            _id: usrID
+          }, {
+            subscribed: false
+          })
+        } catch (err) {
+          return console.error('Error: ', error)
+        }
+
+        mongoose.connection.close();
+        bot.sendMessage(usrID, "You have sucessfully unsubscribed from updates.", addReplyMarkup('Subscribe'));
+      });
       break;
   }
-
-
-
 });
 
-// bot.sendMessage(312119002, 'hey');
+
+
 
 module.exports = bot

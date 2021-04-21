@@ -8,7 +8,7 @@ const userIdsSchema = mongoose.Schema({
   },
   subscribed: {
     type: Boolean,
-    default: false
+    default: true
   }
 
 });

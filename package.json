@@ -9,8 +9,10 @@
   "author": "Yury Kurouski",
   "license": "ISC",
   "dependencies": {
+    "co-body": "^6.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.10.0",
     "mongoose": "^5.12.5",
     "node-telegram-bot-api": "^0.52.0"
   },
