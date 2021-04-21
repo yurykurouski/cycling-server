@@ -7,6 +7,11 @@ const token = process.env.TG_TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
+/* const collection = userIdsSchema.find({
+  _id: 312119002
+})
+console.log(collection) */
+
 const addReplyMarkup = (text) => {
   return {
     "reply_markup": {
@@ -18,18 +23,19 @@ const addReplyMarkup = (text) => {
 
 bot.on('message', (msg) => {
   const msgNormalized = msg.text.toString().toLowerCase();
+  const usrID = msg.chat.id;
 
   switch (msgNormalized) {
 
     case '/start':
       mongo().then(async (mongoose) => {
         try {
-          bot.sendMessage(msg.chat.id, "Welcome, folk", addReplyMarkup('Unsubscribe'));
-          
           await new userIdsSchema({
-            _id: msg.chat.id,
-            userId: msg.chat.id
+            _id: usrID,
+            userId: usrID
           }).save();
+
+          await bot.sendMessage(usrID, "Welcome, folk", addReplyMarkup('Unsubscribe'));
         } catch (err) {
           return console.log('User with provided ID already exists');
         }
@@ -40,11 +46,17 @@ bot.on('message', (msg) => {
       break;
 
     case 'subscribe':
-      bot.sendMessage(msg.chat.id, "You have sucessfully subscribe for updates.", addReplyMarkup('Unsubscribe'));
+      mongo().then(async (mongoose) => {
+        try {
+          await userIdsSchema.findOneAndUpdate
+        }
+      })
+
+      bot.sendMessage(usrID, "You have sucessfully subscribe for updates.", addReplyMarkup('Unsubscribe'));
       break;
-    
+
     case 'unsubscribe':
-      bot.sendMessage(msg.chat.id, "You have sucessfully unsubscribed from updates.", addReplyMarkup('Subscribe'));
+      bot.sendMessage(usrID, "You have sucessfully unsubscribed from updates.", addReplyMarkup('Subscribe'));
       break;
   }
 
