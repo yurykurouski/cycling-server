@@ -10,7 +10,6 @@ const userIdsSchema = mongoose.Schema({
     type: Boolean,
     default: true
   }
-
 });
 
 module.exports = mongoose.model('userId', userIdsSchema);
