@@ -18,8 +18,6 @@ const Utils = {
       bot.sendMessage(user.userId, `Vejsnorian, new event has been created:\n${body.title}\n${body.description}\n${body.author}\n${body.link}`)
     });
   }
-
-
 }
 
 module.exports = Utils

@@ -1,20 +1,26 @@
 const express = require('express');
-const coBody = require('co-body');
+const cors = require('cors')
+// const coBody = require('co-body');
 const utils = require('./utils');
-const eventSchema = require('./mongo/new-event');
-const userIdsSchema = require('./mongo/tg-user-id');
+const eventSchema = require('./mongo/schemas/new-event');
+const userIdsSchema = require('./mongo/schemas/tg-user-id');
+const { body, check, validationResult } = require('express-validator');
 const mongo = require("./mongo/mongo");
 require('./bot/bot');
 
 const app = express();
 const port = 3012;
 
+app.use(cors());
+app.use(express.json());
+
 app.listen(port, () => {
   console.log(`Express listening at //localhost:${port}`);
 });
 
 app.post('/new-event', async (req, res) => {
-  const body = await coBody.json(req);
+  const body = await req.body
+  // const body = await coBody.json(req);
 
   mongo().then(async (mongoose) => {
     try {
@@ -43,3 +49,19 @@ app.post('/new-event', async (req, res) => {
 
 });
 
+app.post('/register',
+  check('email').isEmail(),
+  check('password').notEmpty(),
+  check('repeatPass').notEmpty().custom((value, { req }) => value === req.body.password),
+  async (req, res) => {
+    // const body = await coBody.json(req);
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    await res.sendStatus(200)
+    await console.log(req.body)
+  })

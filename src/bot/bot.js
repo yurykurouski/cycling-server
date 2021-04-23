@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv/config');
 const mongo = require('../mongo/mongo');
-const userIdsSchema = require('../mongo/tg-user-id');
+const userIdsSchema = require('../mongo/schemas/tg-user-id');
 
 const token = process.env.TG_TOKEN;
 
