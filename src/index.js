@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors')
 const utils = require('./utils');
@@ -54,7 +55,8 @@ app.post('/register',
   async (req, res) => {
 
     const errors = validationResult(req);
-    const body = req.body;
+    const body = await req.body;
+    console.log(await body)
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -75,7 +77,7 @@ app.post('/register',
           hashedPass: body.password
         }).save();
 
-        res.sendStatus(200);
+        await res.sendStatus(200);
       } catch (err) {
         return res.status(400).send(err.message)
       } finally {
