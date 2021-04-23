@@ -68,7 +68,7 @@ bot.on('message', (msg) => {
             subscribed: false
           })
         } catch (err) {
-          return console.error('Error: ', error)
+          return console.error('Error: ', error.message)
         }
 
         mongoose.connection.close();
@@ -77,8 +77,6 @@ bot.on('message', (msg) => {
       break;
   }
 });
-
-
 
 
 module.exports = bot
