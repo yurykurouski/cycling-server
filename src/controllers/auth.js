@@ -56,7 +56,7 @@ module.exports.login = async function (req, res) {
       });
     } else {
       res.status(401).json({
-        message: 'Passwords does not matches.'
+        message: 'Invalid password.'
       })
     }
   } else {
