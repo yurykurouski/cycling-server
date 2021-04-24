@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userIdsSchema = mongoose.Schema({
+const TGUser = mongoose.Schema({
   _id: Number,
   userId: {
     type: Number,
@@ -12,4 +12,4 @@ const userIdsSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('userId', userIdsSchema);
+module.exports = mongoose.model('TG-users', TGUser);

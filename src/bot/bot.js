@@ -1,7 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
-// require('dotenv/config');
 const mongo = require('../mongo/mongo');
-const userIdsSchema = require('../mongo/schemas/tg-user-id');
+const TGUser = require('../mongo/models/TG-User');
 
 const token = process.env.TG_TOKEN;
 
@@ -25,7 +24,7 @@ bot.on('message', (msg) => {
     case '/start':
       mongo().then(async (mongoose) => {
         try {
-          await new userIdsSchema({
+          await new TGUser({
             _id: usrID,
             userId: usrID
           }).save();
@@ -45,7 +44,7 @@ bot.on('message', (msg) => {
     case 'subscribe':
       mongo().then(async (mongoose) => {
         try {
-          await userIdsSchema.findOneAndUpdate({
+          await TGUser.findOneAndUpdate({
             _id: usrID
           }, {
             subscribed: true
@@ -62,7 +61,7 @@ bot.on('message', (msg) => {
     case 'unsubscribe':
       mongo().then(async (mongoose) => {
         try {
-          await userIdsSchema.findOneAndUpdate({
+          await TGUser.findOneAndUpdate({
             _id: usrID
           }, {
             subscribed: false
