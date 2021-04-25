@@ -40,7 +40,7 @@ module.exports.login = async function (req, res) {
 
   const candidate = await User.findOne({
     email: body.email
-  })
+  });
 
   if (candidate) {
     const passResult = await bcrypt.compareSync(body.password, candidate.hashedPass);
@@ -57,11 +57,29 @@ module.exports.login = async function (req, res) {
     } else {
       res.status(401).json({
         message: 'Invalid password.'
-      })
+      });
     }
   } else {
     res.status(404).json({
       message: 'User with provided email is not registered.'
     });
   }
+}
+
+module.exports.auth = async function (req, res) {
+  const token = await req.headers.authorization;
+  const deBerearized = await token.replace(/^Bearer\s/, '');
+
+  const decoded = await jwt.verify(deBerearized, process.env.JWT);
+
+  if (decoded) {
+    const candidate = await User.findById(decoded.userId);
+
+    if (candidate) {
+      return await res.status(200).send(candidate._id)
+    } 
+      return await res.status(400);
+  } 
+
+  res.status(401);
 }

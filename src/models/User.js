@@ -5,6 +5,15 @@ const User = mongoose.Schema({
     type: String,
     require: true
   },
+  name: {
+    type: String
+  },
+  secondName: {
+    type:String
+  },
+  strava: {
+    type: String
+  },
   hashedPass: {
     type: String,
     require: true
