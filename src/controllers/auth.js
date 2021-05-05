@@ -25,13 +25,13 @@ module.exports.register = async function (req, res) {
     });
 
     try {
-      await user.save();
+     await user.save();
       res.status(201).json({
         message: 'New user registered'
       })
     } catch (err) {
       errHandler(res, e);
-    }
+    } 
   }
 }
 
@@ -49,7 +49,7 @@ module.exports.login = async function (req, res) {
       const token = jwt.sign({
         email: candidate.email,
         userId: candidate._id
-      }, process.env.JWT, { expiresIn: 60 * 60 });
+      }, process.env.JWT, { expiresIn: 60 * 600 });
 
       res.status(200).json({
         token: `Bearer ${token}`
@@ -76,7 +76,7 @@ module.exports.auth = async function (req, res) {
     const candidate = await User.findById(decoded.userId);
 
     if (candidate) {
-      return await res.status(200).send(candidate._id)
+      return await res.status(200).send(candidate._id);
     } 
       return await res.status(400);
   } 

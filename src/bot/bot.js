@@ -77,5 +77,4 @@ bot.on('message', (msg) => {
   }
 });
 
-
-module.exports = bot
+module.exports = bot;
