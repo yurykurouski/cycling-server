@@ -12,6 +12,9 @@ const Event = mongoose.Schema({
     type: String
   },
   date: requiredString,
+  distance: {
+    type: String
+  },
   terrain: {
     type: String
   },
