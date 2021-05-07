@@ -8,6 +8,7 @@ module.exports.newEvent = async function (req, res) {
     adress: body.adress,
     description: body.description,
     date: body.date,
+    distance: body.distance,
     terrain: body.terrain,
     level: body.level,
     author: body.author,
