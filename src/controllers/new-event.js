@@ -10,7 +10,8 @@ module.exports.newEvent = async function (req, res) {
     date: body.date,
     terrain: body.terrain,
     level: body.level,
-    author: body.author
+    author: body.author,
+    markerData: body.markerData
   });
 
   try {
