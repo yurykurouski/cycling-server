@@ -18,9 +18,7 @@ module.exports.newEvent = async function (req, res) {
   try {
     await event.save();
 
-    res.status(201).json({
-      message: 'Created'
-    })
+    res.status(201);
   } catch (err) {
     errHandler(res, e);
   }
