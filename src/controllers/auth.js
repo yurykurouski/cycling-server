@@ -66,9 +66,9 @@ module.exports.login = async function (req, res) {
 
 module.exports.auth = async function (req, res) {
   const token = await req.headers.authorization;
-  const deBerearized = await token.replace(/^Bearer\s/, '');
+  const deBearerized = await token.replace(/^Bearer\s/, '');
 
-  const decoded = await jwt.verify(deBerearized, process.env.JWT);
+  const decoded = await jwt.verify(deBearerized, process.env.JWT);
 
   if (decoded) {
     const candidate = await User.findById(decoded.userId);

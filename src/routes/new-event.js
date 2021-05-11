@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/new-event', passport.authenticate('jwt', { session: false }), controller.newEvent);
 // отключил аутентификацию для получения списка евентов
 router.get('/events-all', controller.getEvents);
+router.get('/from-user/', passport.authenticate('jwt', { session: false }), controller.getEventsByUser);
 
 module.exports = router;
