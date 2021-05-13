@@ -51,3 +51,27 @@ module.exports.getEventsByUser = async function (req, res) {
 
   res.status(401);
 }
+
+module.exports.upateEventById = async function (req, res) {
+  const body = await req.body;
+
+  try {
+    if (body._id) {
+      await Event.findByIdAndUpdate(body._id, {
+        title: body.title,
+        adress: body.adress,
+        description: body.description,
+        date: body.date,
+        distance: body.distance,
+        terrain: body.terrain,
+        level: body.level,
+        author: body.author,
+        markerData: body.markerData
+      });
+
+      res.status(201);
+    }
+  } catch (err) {
+    res.status(404);
+  }
+}
