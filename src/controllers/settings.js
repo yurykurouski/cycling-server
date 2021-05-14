@@ -1,10 +1,8 @@
 const User = require('../models/User');
 
 module.exports.myProfile = async (req, res) => {
-  const body = req.body;
-  console.log('dsfs')
   try {
-    const user = await User.findById(body._id);
+    const user = await User.findById(req.user._id);
 
      res.status(201).json(user.userInfo);
   } catch (err) {
