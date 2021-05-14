@@ -68,7 +68,7 @@ module.exports.upateEventById = async function (req, res) {
         author: body.author,
         markerData: body.markerData
       });
-
+        console.log(body)
       res.status(201);
     }
   } catch (err) {

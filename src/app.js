@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const authRoutes = require('./routes/auth');
 const newEventRoutes = require('./routes/new-event');
+const settingsRoutes = require('./routes/settings');
 
 const app = express();
 
@@ -23,5 +24,6 @@ require('./middleware/passport')(passport);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/events', newEventRoutes);
+app.use('/api/settings', settingsRoutes);
 
 module.exports = app;

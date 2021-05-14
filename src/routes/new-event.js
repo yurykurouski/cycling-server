@@ -9,6 +9,6 @@ router.post('/new-event', passport.authenticate('jwt', { session: false }), cont
 // отключил аутентификацию для получения списка евентов
 router.get('/events-all', controller.getEvents);
 router.get('/by-user', passport.authenticate('jwt', { session: false }), controller.getEventsByUser);
-router.put('/update-event', passport.authenticate('jwt', { session: false }), controller.upateEventById);
+router.put('/update-event', controller.upateEventById);
 
 module.exports = router;
