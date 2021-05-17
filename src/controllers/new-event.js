@@ -67,7 +67,7 @@ module.exports.upateEventById = async function (req, res) {
         level: body.level,
         author: body.author,
         markerData: body.markerData
-      });
+      }, { new: true });
 
       await res.status(201).json(event);
     }
