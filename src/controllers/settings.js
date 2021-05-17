@@ -25,7 +25,7 @@ module.exports.myProfileUpdate = async (req, res) => {
       }
     }, { new: true });
 
-    res.status(201).json(field);
+    res.status(201).json(field.userInfo);
   } catch (err) {
     res.status(404);
   }

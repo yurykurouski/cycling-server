@@ -57,7 +57,7 @@ module.exports.upateEventById = async function (req, res) {
 
   try {
     if (body._id) {
-      await Event.findByIdAndUpdate(body._id, {
+      const event = await Event.findByIdAndUpdate(body._id, {
         title: body.title,
         adress: body.adress,
         description: body.description,
@@ -68,7 +68,8 @@ module.exports.upateEventById = async function (req, res) {
         author: body.author,
         markerData: body.markerData
       });
-      res.status(201);
+
+      await res.status(201).json(event);
     }
   } catch (err) {
     res.status(404);
