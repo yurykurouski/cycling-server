@@ -46,7 +46,7 @@ module.exports.addNewGear = async (req, res) => {
   try {
     gear.save();
 
-    res.status(201).json(gear);
+    res.status(201).send(gear);
   } catch (err) {
     res.status(404);
   }
