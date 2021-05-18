@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Gear = require('../models/Gear');
 
 module.exports.myProfile = async (req, res) => {
   try {
@@ -26,6 +27,26 @@ module.exports.myProfileUpdate = async (req, res) => {
     }, { new: true });
 
     res.status(201).json(field.userInfo);
+  } catch (err) {
+    res.status(404);
+  }
+}
+
+module.exports.addNewGear = async (req, res) => {
+  const body = req.body;
+
+  const token = await req.headers.authorization;
+  const deBearerized = await token.replace(/^Bearer\s/, '');
+  const decoded = await jwt.verify(deBearerized, process.env.JWT);
+
+  const gear = await new Gear(
+    { ...body, owner: decoded.userId },
+  );
+
+  try {
+    gear.save();
+
+    res.status(201).json(gear);
   } catch (err) {
     res.status(404);
   }

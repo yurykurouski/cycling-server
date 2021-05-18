@@ -21,7 +21,7 @@ const User = mongoose.Schema({
     Gender: emptyDefaultString,
     Location: emptyDefaultString,
     Weight: emptyDefaultString,
-    About: emptyDefaultString 
+    About: emptyDefaultString
   }
 }, {
   timestamps: true

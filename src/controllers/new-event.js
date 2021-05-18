@@ -4,17 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports.newEvent = async function (req, res) {
   const body = await req.body;
 
-  const event = new Event({
-    title: body.title,
-    adress: body.adress,
-    description: body.description,
-    date: body.date,
-    distance: body.distance,
-    terrain: body.terrain,
-    level: body.level,
-    author: body.author,
-    markerData: body.markerData
-  });
+  const event = new Event({...body});
 
   try {
     await event.save();
