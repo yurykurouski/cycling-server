@@ -8,7 +8,8 @@ const emptyDefaultString = {
 const Gear = mongoose.Schema({
   owner: emptyDefaultString,
   active: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   brand: emptyDefaultString,
   model: emptyDefaultString,
