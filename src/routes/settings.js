@@ -9,5 +9,7 @@ router.get('/my-profile', passport.authenticate('jwt', { session: false }), cont
 router.put('/my-profile', passport.authenticate('jwt', { session: false }), controller.myProfileUpdate);
 
 router.post('/my-gear', passport.authenticate('jwt', { session: false }), controller.addNewGear);
+router.get('/my-gear', passport.authenticate('jwt', { session: false }), controller.getMyGear);
+router.put('/my-gear', passport.authenticate('jwt', { session: false }), controller.setActiveBike);
 
 module.exports = router;
