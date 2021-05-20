@@ -67,7 +67,7 @@ module.exports.getMyGear = async (req, res) => {
   }
 }
 
-module.exports.setActiveBike = async (req, res) => {
+module.exports.setActiveGear = async (req, res) => {
   const body = req.body;
   const decoded = await decodeToken(req);
 
@@ -81,6 +81,18 @@ module.exports.setActiveBike = async (req, res) => {
     }, { new: true });
 
     res.status(201).json(toggled);
+  } catch (err) {
+    res.status(404);
+  }
+}
+
+module.exports.deleteGear = async (req, res) => {
+  const body = req.body;
+
+  try {
+    const deleted = await Gear.findByIdAndDelete(body._id);
+
+    res.status(200).json(deleted);
   } catch (err) {
     res.status(404);
   }
