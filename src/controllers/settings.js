@@ -87,10 +87,9 @@ module.exports.setActiveGear = async (req, res) => {
 }
 
 module.exports.deleteGear = async (req, res) => {
-  const body = req.body;
-
+  console.log(req.query)
   try {
-    const deleted = await Gear.findByIdAndDelete(body._id);
+    const deleted = await Gear.findByIdAndDelete(req.query.id);
 
     res.status(200).json(deleted);
   } catch (err) {
