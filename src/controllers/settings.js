@@ -21,7 +21,7 @@ module.exports.myProfileUpdate = async (req, res) => {
   try {
     const field = await User.findByIdAndUpdate(decoded.userId, {
       $set: {
-        [`userInfo.${body.field}`]: body.value
+        [`userInfo.${ body.field }`]: body.value
       }
     }, { new: true });
 
@@ -87,11 +87,24 @@ module.exports.setActiveGear = async (req, res) => {
 }
 
 module.exports.deleteGear = async (req, res) => {
-  console.log(req.query)
   try {
     const deleted = await Gear.findByIdAndDelete(req.query.id);
 
     res.status(200).json(deleted);
+  } catch (err) {
+    res.status(404);
+  }
+}
+
+module.exports.editGear = async (req, res) => {
+  const body = req.body;
+
+  try {
+    const updated = await Gear.findByIdAndUpdate(body.id, {
+      ...body.data
+    }, { new: true });
+
+    res.status(200).json(updated);
   } catch (err) {
     res.status(404);
   }

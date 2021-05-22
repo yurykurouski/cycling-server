@@ -11,15 +11,15 @@ const Gear = mongoose.Schema({
     type: Boolean,
     default: false
   },
-  brand: emptyDefaultString,
-  model: emptyDefaultString,
   name: emptyDefaultString,
-  notes: emptyDefaultString,
   types: emptyDefaultString,
   weight: {
     type: Number,
     default: ''
   },
+  brand: emptyDefaultString,
+  model: emptyDefaultString,
+  notes: emptyDefaultString,
 });
 
 module.exports = mongoose.model('gear', Gear);

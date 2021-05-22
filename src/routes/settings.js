@@ -12,5 +12,6 @@ router.post('/my-gear', passport.authenticate('jwt', { session: false }), contro
 router.get('/my-gear', passport.authenticate('jwt', { session: false }), controller.getMyGear);
 router.put('/my-gear', passport.authenticate('jwt', { session: false }), controller.setActiveGear);
 router.delete('/my-gear', passport.authenticate('jwt', { session: false }), controller.deleteGear);
+router.patch('/my-gear', passport.authenticate('jwt', { session: false }), controller.editGear);
 
 module.exports = router;
