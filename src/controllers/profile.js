@@ -6,7 +6,7 @@ module.exports.getGearByUser = async (req, res) => {
   const query = req.query;
 
   try {
-    const response = await Gear.find({
+    const response = await Gear.findOne({
       owner: query.id,
       active: true
     });
