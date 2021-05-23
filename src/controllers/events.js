@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 module.exports.newEvent = async function (req, res) {
   const body = await req.body;
 
-  const event = new Event({...body});
+  const event = new Event({ ...body });
 
   try {
     await event.save();
@@ -22,24 +22,17 @@ module.exports.getEvents = async function (req, res) {
 }
 
 module.exports.getEventsByUser = async function (req, res) {
-  const token = await req.headers.authorization;
+  const query = req.query;
 
-  const deBearerized = await token.replace(/^Bearer\s/, '');
-
-  const decoded = await jwt.verify(deBearerized, process.env.JWT);
-
-  if (decoded) {
+  try {
     const events = await Event.find({
-      author: decoded.userId
+      author: query.id
     });
 
-    if (events) {
-      return await res.status(200).send(events);
-    }
-    return await res.status(404);
+    res.status(200).send(events);
+  } catch (err) {
+    res.status(404);
   }
-
-  res.status(401);
 }
 
 module.exports.upateEventById = async function (req, res) {

@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Gear = require('../models/Gear');
 const decodeToken = require("../utils/decode-token");

@@ -18,18 +18,18 @@ module.exports.register = async function (req, res) {
   } else {
     const salt = bcrypt.genSaltSync(10)
     const password = body.password;
-    
+
     const user = new User({
       email: body.email,
       hashedPass: bcrypt.hashSync(password, salt)
     });
 
     try {
-     await user.save();
+      await user.save();
       res.status(201);
     } catch (err) {
       errHandler(res, e);
-    } 
+    }
   }
 }
 
@@ -50,7 +50,7 @@ module.exports.login = async function (req, res) {
       }, process.env.JWT, { expiresIn: 60 * 600 });
 
       res.status(200).json({
-        token: `Bearer ${token}`
+        token: `Bearer ${ token }`
       });
     } else {
       res.status(401).json({
@@ -65,19 +65,19 @@ module.exports.login = async function (req, res) {
 }
 
 module.exports.auth = async function (req, res) {
-  const token = await req.headers.authorization;
-  const deBearerized = await token.replace(/^Bearer\s/, '');
+  const token = req.headers.authorization;
+  const deBearerized = token.replace(/^Bearer\s/, '');
 
-  const decoded = await jwt.verify(deBearerized, process.env.JWT);
+  const decoded = jwt.verify(deBearerized, process.env.JWT);
 
   if (decoded) {
     const candidate = await User.findById(decoded.userId);
 
     if (candidate) {
-      return await res.status(200).send(candidate._id);
-    } 
-      return await res.status(400);
-  } 
+      return await res.status(202).send(candidate._id);
+    }
+    return await res.status(400);
+  }
 
   res.status(401);
 }
