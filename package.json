@@ -4,7 +4,8 @@
   "description": "DB server for Vejsnoryans",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon ./src/index.js"
+    "test": "nodemon ./src/index.js",
+    "start": "node ./src/index.js"
   },
   "author": "Yury Kurouski",
   "license": "ISC",
