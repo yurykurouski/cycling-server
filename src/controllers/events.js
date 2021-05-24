@@ -41,15 +41,7 @@ module.exports.upateEventById = async function (req, res) {
   try {
     if (body._id) {
       const event = await Event.findByIdAndUpdate(body._id, {
-        title: body.title,
-        adress: body.adress,
-        description: body.description,
-        date: body.date,
-        distance: body.distance,
-        terrain: body.terrain,
-        level: body.level,
-        author: body.author,
-        markerData: body.markerData
+        ...body
       }, { new: true });
 
       await res.status(201).json(event);
