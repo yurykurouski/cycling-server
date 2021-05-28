@@ -1,6 +1,9 @@
+const decodeToken = require("../utils/decode-token");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
 const Gear = require('../models/Gear');
-const decodeToken = require("../utils/decode-token");
 
 module.exports.myProfile = async (req, res) => {
   try {
@@ -106,5 +109,35 @@ module.exports.editGear = async (req, res) => {
     res.status(200).json(updated);
   } catch (err) {
     res.status(404);
+  }
+}
+
+module.exports.changeEmail = async function (req, res) {
+  const body = req.body;
+  const token = req.headers.authorization;
+  const deBearerized = token.replace(/^Bearer\s/, '');
+
+  const decoded = jwt.verify(deBearerized, process.env.JWT);
+
+  if (decoded) {
+    try {
+      const candidate = await User.findById(decoded.userId);
+
+      const passResult = await bcrypt.compareSync(body.password, candidate.hashedPass);
+
+      if (passResult) {
+        candidate.email = body.email;
+
+        candidate.save();
+      } else {
+        res.status(401).json({
+          message: 'Invalid password.'
+        });
+      }
+
+      res.status(200).send(candidate.email);
+    } catch (err) {
+      res.status(404);
+    }
   }
 }

@@ -14,4 +14,6 @@ router.put('/my-gear', passport.authenticate('jwt', { session: false }), control
 router.delete('/my-gear', passport.authenticate('jwt', { session: false }), controller.deleteGear);
 router.patch('/my-gear', passport.authenticate('jwt', { session: false }), controller.editGear);
 
+router.patch('/my-account/change-email', passport.authenticate('jwt', { session: false }), controller.changeEmail);
+
 module.exports = router;

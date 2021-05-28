@@ -74,9 +74,9 @@ module.exports.auth = async function (req, res) {
     const candidate = await User.findById(decoded.userId);
 
     if (candidate) {
-      return await res.status(202).send(candidate._id);
+      return res.status(202).send({ userId: candidate._id, userEmail: candidate.email });
     }
-    return await res.status(400);
+    return res.status(400);
   }
 
   res.status(401);
