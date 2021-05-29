@@ -129,13 +129,13 @@ module.exports.changeEmail = async function (req, res) {
         candidate.email = body.email;
 
         candidate.save();
+
+        res.status(200).json(candidate.email);
       } else {
         res.status(401).json({
           message: 'Invalid password.'
         });
       }
-
-      res.status(200).send(candidate.email);
     } catch (err) {
       res.status(404);
     }
