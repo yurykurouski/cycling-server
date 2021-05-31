@@ -18,7 +18,7 @@ module.exports.myProfile = async (req, res) => {
 module.exports.myProfileUpdate = async (req, res) => {
   const body = req.body;
 
-  const decoded = await await decodeToken(req);
+  const decoded = await decodeToken(req);
 
   try {
     const field = await User.findByIdAndUpdate(decoded.userId, {
@@ -114,10 +114,7 @@ module.exports.editGear = async (req, res) => {
 
 module.exports.changeEmail = async function (req, res) {
   const body = req.body;
-  const token = req.headers.authorization;
-  const deBearerized = token.replace(/^Bearer\s/, '');
-
-  const decoded = jwt.verify(deBearerized, process.env.JWT);
+  const decoded = await decodeToken(req);
 
   if (decoded) {
     try {
@@ -128,7 +125,7 @@ module.exports.changeEmail = async function (req, res) {
       if (passResult) {
         candidate.email = body.email;
 
-        candidate.save();
+        await candidate.save();
 
         res.status(200).json(candidate.email);
       } else {
@@ -138,6 +135,36 @@ module.exports.changeEmail = async function (req, res) {
       }
     } catch (err) {
       res.status(404);
+    }
+  }
+}
+
+module.exports.changePassword = async function (req, res) {
+  const body = req.body;
+  const decoded = await decodeToken(req);
+
+  if (decoded) {
+    const candidate = await User.findById(decoded.userId);
+
+    const passResult = await bcrypt.compareSync(body.password, candidate.hashedPass);
+
+    if (passResult) {
+      const salt = bcrypt.genSaltSync(10);
+      const newPassword = body.newPassword;
+
+      candidate.hashedPass = bcrypt.hashSync(newPassword, salt);
+
+      try {
+        await candidate.save();
+
+        res.status(201).send('ok');
+      } catch (err) {
+        res.status(404);
+      }
+    } else {
+      res.status(401).json({
+        message: 'Invalid password.'
+      });
     }
   }
 }
