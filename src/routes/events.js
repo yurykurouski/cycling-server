@@ -8,6 +8,7 @@ const router = express.Router();
 router.post('/new-event', passport.authenticate('jwt', { session: false }), controller.newEvent);
 router.get('/events-all', controller.getEvents);
 router.get('/by-user', passport.authenticate('jwt', { session: false }), controller.getEventsByUser);
-router.put('/update-event', controller.upateEventById);
+router.put('/update-event', passport.authenticate('jwt', { session: false }), controller.upateEventById);
+router.delete('/delete-event', passport.authenticate('jwt', { session: false }), controller.deleteEventById)
 
 module.exports = router;

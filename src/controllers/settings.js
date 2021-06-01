@@ -157,7 +157,7 @@ module.exports.changePassword = async function (req, res) {
       try {
         await candidate.save();
 
-        res.status(201).send('ok');
+        res.status(201).json('ok');
       } catch (err) {
         res.status(404);
       }

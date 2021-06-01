@@ -50,3 +50,15 @@ module.exports.upateEventById = async function (req, res) {
     res.status(404);
   }
 }
+
+module.exports.deleteEventById = async function (req, res) {
+  const query = req.query;
+
+  try {
+    const deleted = await Event.findByIdAndDelete(query.id);
+
+    res.status(200).json(deleted);
+  } catch (err) {
+    res.status(404);
+  }
+}
