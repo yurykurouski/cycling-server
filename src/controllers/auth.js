@@ -24,9 +24,17 @@ module.exports.register = async function (req, res) {
       hashedPass: bcrypt.hashSync(password, salt)
     });
 
+    const token = jwt.sign({
+      email: user.email,
+      userId: user._id
+    }, process.env.JWT, { expiresIn: 60 * 600 });
+
     try {
       await user.save();
-      res.status(201);
+
+      res.status(201).json({
+        token: `Bearer ${ token }`
+      });;
     } catch (err) {
       errHandler(res, e);
     }
