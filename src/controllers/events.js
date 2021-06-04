@@ -1,5 +1,6 @@
 const Event = require('../models/Event');
 const jwt = require('jsonwebtoken');
+const decodeToken = require("../utils/decode-token");
 
 module.exports.newEvent = async function (req, res) {
   const body = await req.body;
@@ -58,6 +59,35 @@ module.exports.deleteEventById = async function (req, res) {
     const deleted = await Event.findByIdAndDelete(query.id);
 
     res.status(200).json(deleted);
+  } catch (err) {
+    res.status(404);
+  }
+}
+
+module.exports.userIn = async function (req, res) {
+  const body = req.body;
+  const decoded = await decodeToken(req);
+
+  try {
+    const event = await Event.findById(body.eventId);
+    const whosIn = event.whosIn;
+
+    const match = whosIn.find(user => user.userId === decoded.userId);
+
+    if (!match) {
+      const userIn = {
+        "userId": decoded.userId,
+        "userName": body.userName
+      }
+
+      event.whosIn.push(userIn);
+
+      await event.save();
+
+      return res.status(201).send(event);
+    }
+
+    res.status(204).send(event);
   } catch (err) {
     res.status(404);
   }

@@ -24,7 +24,8 @@ const Event = mongoose.Schema({
   author: requiredString,
   markerData: {
     type: Object
-  }
+  },
+  whosIn: Array
 }, {
   timestamps: true
 });

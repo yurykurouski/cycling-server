@@ -15,7 +15,10 @@ const User = mongoose.Schema({
     require: true
   },
   userInfo: {
-    Name: emptyDefaultString,
+    Name: {
+      type: String,
+      default: 'Unknown Vejsnorian'
+    },
     SecondName: emptyDefaultString,
     Strava: emptyDefaultString,
     Gender: emptyDefaultString,

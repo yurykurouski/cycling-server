@@ -1,6 +1,5 @@
 const decodeToken = require("../utils/decode-token");
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 const Gear = require('../models/Gear');

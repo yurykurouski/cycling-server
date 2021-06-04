@@ -9,6 +9,7 @@ router.post('/new-event', passport.authenticate('jwt', { session: false }), cont
 router.get('/events-all', controller.getEvents);
 router.get('/by-user', passport.authenticate('jwt', { session: false }), controller.getEventsByUser);
 router.put('/update-event', passport.authenticate('jwt', { session: false }), controller.upateEventById);
-router.delete('/delete-event', passport.authenticate('jwt', { session: false }), controller.deleteEventById)
+router.delete('/delete-event', passport.authenticate('jwt', { session: false }), controller.deleteEventById);
+router.patch('/im-in', passport.authenticate('jwt', { session: false }), controller.userIn);
 
 module.exports = router;
