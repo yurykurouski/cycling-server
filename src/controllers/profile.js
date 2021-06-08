@@ -11,7 +11,7 @@ module.exports.getGearByUser = async (req, res) => {
       active: true
     });
 
-    res.status(200).json(response || []);
+    res.status(200).json(response || [{}]);
   } catch (err) {
     res.status(404);
   }
