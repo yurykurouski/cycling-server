@@ -10,6 +10,7 @@ router.get('/events-all', controller.getEvents);
 router.get('/by-user', passport.authenticate('jwt', { session: false }), controller.getEventsByUser);
 router.put('/update-event', passport.authenticate('jwt', { session: false }), controller.upateEventById);
 router.delete('/delete-event', passport.authenticate('jwt', { session: false }), controller.deleteEventById);
-router.patch('/im-in', passport.authenticate('jwt', { session: false }), controller.userIn);
+
+router.patch('/user-in-out', passport.authenticate('jwt', { session: false }), controller.userInOut);
 
 module.exports = router;

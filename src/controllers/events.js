@@ -10,7 +10,7 @@ module.exports.newEvent = async function (req, res) {
   try {
     await event.save();
 
-    res.status(201);
+    res.status(201).json(event);
   } catch (err) {
     errHandler(res, e);
   }
@@ -64,7 +64,7 @@ module.exports.deleteEventById = async function (req, res) {
   }
 }
 
-module.exports.userIn = async function (req, res) {
+module.exports.userInOut = async function (req, res) {
   const body = req.body;
   const decoded = await decodeToken(req);
 
@@ -82,13 +82,18 @@ module.exports.userIn = async function (req, res) {
 
       event.whosIn.push(userIn);
 
-      await event.save();
+      event.save();
 
       return res.status(201).send(event);
+    } else {
+      event.whosIn = event.whosIn.filter(user => user.userId !== decoded.userId);
+
+      event.save();
+
+      res.status(201).send(event);
     }
 
-    res.status(204).send(event);
   } catch (err) {
-    res.status(404);
+    res.status(500);
   }
 }
