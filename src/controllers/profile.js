@@ -1,6 +1,5 @@
-const User = require('../models/User');
 const Gear = require('../models/Gear');
-const decodeToken = require("../utils/decode-token");
+const objectToArray = require('../utils/object-to-array');
 
 module.exports.getGearByUser = async (req, res) => {
   const query = req.query;
@@ -11,7 +10,9 @@ module.exports.getGearByUser = async (req, res) => {
       active: true
     });
 
-    res.status(200).json(response || [{}]);
+    const arrayed = objectToArray(response);
+
+    res.status(200).json(arrayed);
   } catch (err) {
     res.status(404);
   }
