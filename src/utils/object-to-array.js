@@ -1,3 +1,4 @@
 module.exports = function (data) {
-  return data ? data : [data];
+  if (!data || !Array.isArray(data)) return [data];
+  return data;
 }
