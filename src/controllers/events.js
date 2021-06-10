@@ -1,16 +1,28 @@
 const Event = require('../models/Event');
 const jwt = require('jsonwebtoken');
 const decodeToken = require("../utils/decode-token");
+const bot = require('../bot/bot');
+const TGUser = require('../models/TG-User');
+const botMessage = require('../utils/new-event-bot-message');
 
 module.exports.newEvent = async function (req, res) {
   const body = await req.body;
 
   const event = new Event({ ...body });
+  const telegramUsers = await TGUser.find({
+    subscribed: true
+  });
 
   try {
     await event.save();
 
     res.status(201).json(event);
+
+    telegramUsers.forEach((user) => {
+      bot.sendMessage(user._id, botMessage.eventSummary(event), botMessage.eventLinkButton(event));
+
+      if (event.markerData) bot.sendLocation(user._id, event.markerData.lat, event.markerData.lng, botMessage.eventReplyMarkup);
+    });
   } catch (err) {
     errHandler(res, e);
   }

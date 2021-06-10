@@ -7,11 +7,11 @@ const bot = new TelegramBot(token, { polling: true });
 
 const addReplyMarkup = (text) => {
   return {
-    "reply_markup": {
-      "resize_keyboard": true,
-      "keyboard": [[text]]
-    }
-  }
+    'reply_markup': {
+      'resize_keyboard': true,
+      'keyboard': [[text]]
+    },
+  };
 }
 
 bot.on('message', async (msg) => {
@@ -30,7 +30,7 @@ bot.on('message', async (msg) => {
         bot.sendMessage(usrID, 'Welcome, folk.');
         bot.sendMessage(usrID, 'You has automatically subscribed for updates. If you want to unsubscribe - just press button bellow', addReplyMarkup('Unsubscribe'));
       } catch (err) {
-        bot.sendMessage(usrID, 'Bot is already activated')
+        bot.sendMessage(usrID, 'Bot is already activated');
         return console.error('User with provided ID already exists');
       }
       break;
@@ -45,9 +45,9 @@ bot.on('message', async (msg) => {
 
         user1.save();
 
-        bot.sendMessage(usrID, "You have sucessfully subscribe for updates.", addReplyMarkup('Unsubscribe'));
+        bot.sendMessage(usrID, 'You have sucessfully subscribe for updates.', addReplyMarkup('Unsubscribe'));
       } catch (err) {
-        console.log('Something went wrong')
+        console.log('Something went wrong');
       }
       break;
 
@@ -61,7 +61,7 @@ bot.on('message', async (msg) => {
 
         user2.save();
 
-        bot.sendMessage(usrID, "You have sucessfully unsubscribed from updates.", addReplyMarkup('Subscribe'));
+        bot.sendMessage(usrID, 'You have sucessfully unsubscribed from updates.', addReplyMarkup('Subscribe'));
       } catch (err) {
         console.log('Something went wrong');
       }
