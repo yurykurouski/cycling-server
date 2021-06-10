@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const eventsRoutes = require('./routes/events');
 const settingsRoutes = require('./routes/settings');
 const profileRoutes = require('./routes/profile');
+const bot = require('./bot/bot');
 
 const app = express();
 
