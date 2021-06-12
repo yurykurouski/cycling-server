@@ -6,7 +6,7 @@ const Gear = require('../models/Gear');
 
 module.exports.myProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.query.id);
 
     res.status(201).json(user.userInfo);
   } catch (err) {

@@ -6,13 +6,12 @@ const authRoutes = require('./routes/auth');
 const eventsRoutes = require('./routes/events');
 const settingsRoutes = require('./routes/settings');
 const profileRoutes = require('./routes/profile');
-const bot = require('./bot/bot');
 
 const app = express();
 
 app.use(require('morgan')('dev'));
 app.use(require('cors')());
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 
 mongoose.connect(process.env.DB_CONNECTION, {
   useNewUrlParser: true,

@@ -10,7 +10,7 @@ module.exports.newEvent = async function (req, res) {
 
   const event = new Event({ ...body });
   const telegramUsers = await TGUser.find({
-    subscribed: true
+    subscribed: true,
   });
 
   try {
@@ -19,9 +19,9 @@ module.exports.newEvent = async function (req, res) {
     res.status(201).json(event);
 
     telegramUsers.forEach((user) => {
-      bot.sendMessage(user._id, botMessage.eventSummary(event), botMessage.eventLinkButton(event));
-
       if (event.markerData) bot.sendLocation(user._id, event.markerData.lat, event.markerData.lng, botMessage.eventReplyMarkup);
+
+      bot.sendMessage(user._id, botMessage.eventSummary(event), botMessage.eventLinkButton(event));
     });
   } catch (err) {
     errHandler(res, e);
