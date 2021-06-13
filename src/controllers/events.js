@@ -9,6 +9,7 @@ module.exports.newEvent = async function (req, res) {
   const body = await req.body;
 
   const event = new Event({ ...body });
+
   const telegramUsers = await TGUser.find({
     subscribed: true,
   });
@@ -29,18 +30,21 @@ module.exports.newEvent = async function (req, res) {
 }
 
 module.exports.getEvents = async function (req, res) {
-  const events = await Event.find({});
+  const limit = parseInt(req.query.items, 10)
+
+  const events = await Event.find({}).sort({createdAt: -1}).limit(limit);
 
   res.status(201).json(events);
 }
 
 module.exports.getEventsByUser = async function (req, res) {
   const query = req.query;
+  const limit = parseInt(query.items, 10);
 
   try {
     const events = await Event.find({
-      author: query.id
-    });
+      author: query.userId
+    }).sort({createdAt: -1}).limit(limit);
 
     res.status(200).send(events);
   } catch (err) {
