@@ -1,5 +1,4 @@
 const Event = require('../models/Event');
-const jwt = require('jsonwebtoken');
 const decodeToken = require("../utils/decode-token");
 const bot = require('../bot/bot');
 const TGUser = require('../models/TG-User');
