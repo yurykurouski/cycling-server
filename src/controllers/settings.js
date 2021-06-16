@@ -117,8 +117,16 @@ module.exports.changeEmail = async function (req, res) {
 
   if (decoded) {
     try {
-      const candidate = await User.findById(decoded.userId);
+      const checkForFreeEmail = await User.findOne({ email: body.email });
 
+      if (checkForFreeEmail) {
+        return res.status(401).json({
+          message: 'Invalid password.'
+        });
+      }
+
+      const candidate = await User.findById(decoded.userId);
+      
       const passResult = await bcrypt.compareSync(body.password, candidate.hashedPass);
 
       if (passResult) {
