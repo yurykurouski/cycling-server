@@ -32,7 +32,7 @@ module.exports.newEvent = async function (req, res) {
 module.exports.getEvents = async function (req, res) {
   const limit = parseInt(req.query.items, 10)
 
-  const events = await Event.find({}).sort({createdAt: -1}).limit(limit);
+  const events = await Event.find({}).sort({date: 1}).limit(limit);
 
   res.status(201).json(events);
 }
