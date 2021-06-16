@@ -121,7 +121,7 @@ module.exports.changeEmail = async function (req, res) {
 
       if (checkForFreeEmail) {
         return res.status(401).json({
-          message: 'Invalid password.'
+          message: 'Email is taken.'
         });
       }
 
