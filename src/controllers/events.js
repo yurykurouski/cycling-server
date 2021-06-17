@@ -29,9 +29,10 @@ module.exports.newEvent = async function (req, res) {
 }
 
 module.exports.getEvents = async function (req, res) {
-  const limit = parseInt(req.query.items, 10)
+  const limit = parseInt(req.query.items, 10);
+  const currDate = new Date().toISOString();
 
-  const events = await Event.find({}).sort({date: 1}).limit(limit);
+  const events = await Event.find({date: {$gte: currDate}}).sort({date: 1}).limit(limit);
 
   res.status(201).json(events);
 }
@@ -39,10 +40,12 @@ module.exports.getEvents = async function (req, res) {
 module.exports.getEventsByUser = async function (req, res) {
   const query = req.query;
   const limit = parseInt(query.items, 10);
+  const currDate = new Date().toISOString();
 
   try {
     const events = await Event.find({
-      author: query.userId
+      author: query.userId,
+      date: {$gte: currDate}
     }).sort({createdAt: -1}).limit(limit);
 
     res.status(200).send(events);
